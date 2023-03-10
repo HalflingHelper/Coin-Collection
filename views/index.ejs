@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+    <link rel="icon" type="image/png" href="https://images.emojiterra.com/google/android-11/512px/1fa99.png">
+    
+    <title>My Coin Collection</title>
+</head>
+
+<body>
+<% console.log(coin) %>
+
+    <div class="container">
+        <h1>HTML</h1>
+
+        <form action="/search" method="POST">
+            <div class="form-group">
+                <label for="denomination">Denomination</label>
+                <select name="denomination" id="denomination" class="form-control" onclick="updateSpecialOptions()">
+                    <option value="quarter">Quarter</option>
+                    <option value="dime">Dime</option>
+                    <option value="nickel">Nickel</option>
+                    <option value="penny">Penny</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input required value="<%= coin.year%>" type="text" name="year" id="year" class="form-control" pattern="[1-9][0-9]{3}"
+                    onkeyup="updateSpecialOptions()">
+                <small id="year-instruction" class="form-text text-muted">Enter a year between 1000 and 9999</small>
+            </div>
+
+            <div class="form-group" id="special" style="display:none">
+                <label for="design">Special Design</label>
+                <select name="design" id="design" class="form-control">
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <fieldset class="form-control">
+                <div>Select Mint Mark</div>
+                
+                <label for="philadelphia">P</label>
+                <input required type="radio" id="philadelphia" name="mint" value="p"<%if (coin.mint == 'p') {%> checked <% }%>>
+                
+                <label for="denver">D</label>
+                <input required type="radio" id="denver" name="mint" value="d"<%if (coin.mint == 'd') {%> checked <% }%>>
+                
+                <label for="san-fransisco">S</label>
+                <input required type="radio" id="san-fransisco" name="mint" value="s"<%if (coin.mint == 's') {%> checked <% }%>>
+                
+                <label for="none">None</label>
+                <input required type="radio" id="none" name="mint" value="none" <%if (coin.mint == 'none') {%> checked <% }%>>
+            </fieldset>
+            </div>
+
+            <button type="submit" value="addCoin" class="btn btn-primary">Search this Coin</button>
+        </form>
+
+    </div>
+<!-- Break this out into a seperate script -->
+    <script>
+
+        const yearInput = document.getElementById("year")
+        const denominationInput = document.getElementById("denomination")
+        const specialOptionsInput = document.getElementById("special")
+
+        function updateSpecialOptions() {
+            //Get special years from the server
+            //If the year and denomination are special, then
+            // Make the special input visible
+            // Set the inner html to the list of designs
+
+
+            const year = yearInput.value
+            const denomination = denominationInput.value
+
+            let designs = null
+
+            switch (denomination) {
+                case "quarter":
+                    if (year == 2000)
+                    designs = ["A", "B", "C"];
+                    break;
+                case "dime":
+                    break;
+                case "nickel":
+                    break;
+                case "penny":
+                    break;
+            }
+
+            if (designs == null) {
+                specialOptionsInput.style.display = "none"
+                document.getElementById("design").innerHTML = ""
+
+                return;
+            }
+
+            specialOptionsInput.style.display = "block"
+
+            let newIHTML = ""
+            designs.forEach(design => newIHTML += `<option value="${design}">"${design}"</option>`)
+
+            document.getElementById("design").innerHTML = newIHTML
+        }
+
+    </script>
+</body>
+
+
+</html>
