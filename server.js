@@ -19,8 +19,9 @@ app.get('/', async (req, res) => {
     res.render('index.ejs',{ coin: new Coin()});
 });
 
+//Coin gallery page
 app.get('/gallery', async (req, res) => {
-    const coins = await Coin.find();
+    const coins = await Coin.find().sort({ denomination: 'ascending', year: 'ascending'});
     res.render('gallery.ejs', {coins: coins});
 })
 
