@@ -36,10 +36,10 @@
     </nav>
     <div class="container">
 
-        <div id="gallery" class="d-flex flex-wrap justify-content-between">
+        <div id="gallery" class="d-flex flex-wrap align-items-center">
             <!-- Possibly create a _coin_card.ejs if this needs to be used in other pages -->
             <% coins.forEach(coin=> { %>
-                <div class="coin-card card mb-2" style="width: 33%; min-width: 200px;">
+                <div class="coin-card card m-1" style="width: 32%; min-width: 200px;">
                     <div class="card-body">
                         <!-- Card Title is Coin Date -->
                         <h2 class="card-title">
@@ -56,11 +56,15 @@
                                 <%= coin.design%>
                             </div>
                             <% }%>
+                                <form action=<%=`/delete/${coin.id}`%> method="POST">
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you would like to delete this coin?')">
+                                        Delete
+                                    </button>
+                                </form>
                     </div>
                 </div>
                 <% })%>
-
-
         </div>
     </div>
 </body>

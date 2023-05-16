@@ -25,6 +25,11 @@ app.get('/gallery', async (req, res) => {
     res.render('gallery.ejs', {coins: coins});
 })
 
+app.post('/delete/:id', async (req, res) => {
+    await Coin.findByIdAndRemove(req.params.id);
+    res.redirect('/gallery')
+})
+
 //Specifically the searching 
 app.get('/:id', async(req, res) => {
     const coin = await Coin.findById(req.params.id);
